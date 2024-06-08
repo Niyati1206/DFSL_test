@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+    }
+
+    .input-line:focus {
+      border-color: #3ab1df;
+      border-width: 0 0 2px 0;
+      outline: none;
+    }
+
+    .input-line {
+      border: 1px solid #3ab1df;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .title-custom-color {
+      color: #3ab1df;
+    }
+
+    .btn {
+      border-color: #3ab1df;
+      color: #3593aa;
+      border: 2px solid #3ab1df;
+    }
+
+    .btn:hover {
+      background-color: #3ab1df;
+      color: white;
+    }
+
+    .custom-label {
+      color: #4a4a4a;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+  <div class="container mx-auto py-6">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-md shadow-md">
+      <h2 class="text-2xl font-bold mb-4 title-custom-color">Product Details</h2>
+      <form class="grid gap-4">
+        <div class="grid gap-4">
+          <div class="relative flex-1">
+            <label for="id" class="custom-label">ID</label>
+            <input type="text" id="id" name="id" placeholder="Enter ID" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="main-item" class="custom-label">MAIN ITEM</label>
+            <input type="text" id="main-item" name="main-item" placeholder="Enter main item" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="sr-no" class="custom-label">SR NO</label>
+            <input type="text" id="sr-no" name="sr-no" placeholder="Enter SR no." class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="price" class="custom-label">PRICE</label>
+            <input type="number" id="price" name="price" placeholder="Enter price" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="buying-date" class="custom-label">BUYING DATE</label>
+            <input type="date" id="buying-date" name="buying-date" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="department" class="custom-label">DEPARTMENT</label>
+            <input type="text" id="department" name="department" placeholder="Enter department" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="lab-name" class="custom-label">LAB NAME</label>
+            <input type="text" id="lab-name" name="lab-name" placeholder="Enter lab name" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="amc-provider" class="custom-label">AMC PROVIDER</label>
+            <input type="text" id="amc-provider" name="amc-provider" placeholder="Enter AMC provider" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="amc-period" class="custom-label">AMC PERIOD</label>
+            <input type="number" id="amc-period" name="amc-period" placeholder="Enter AMC period" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+          <div class="relative flex-1">
+            <label for="manufacturer-warranty" class="custom-label">MANUFACTURER WARRANTY PERIOD</label>
+            <input type="number" id="manufacturer-warranty" name="manufacturer-warranty" placeholder="Enter manufacturer warranty period" class="input-line peer h-11 border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-blue-gray-700 outline-none transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900" />
+          </div>
+        </div>
+        <div class="flex justify-start">
+          <button type="submit" class="btn hover:bg-blue-600 hover:text-white font-bold py-2 px-4 rounded border border-gray-300 bg-transparent">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

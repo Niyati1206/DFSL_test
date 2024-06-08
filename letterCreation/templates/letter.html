@@ -1,0 +1,189 @@
+{% load static %}
+{% load custom_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+
+       
+        /* Print-specific styles */
+        @media print {
+            /* Hide headers and footers */
+            header,
+            footer {
+                display: none;
+            }
+
+      /* Hide URLs, page titles, and time/date */
+      .url, .page-title, .time-date {
+        display: none;
+      }
+    }
+  </style>
+  <title>Letter 7</title>
+</head>
+
+<body class="font-times text-lg">
+    <div>
+        <div class="img">
+            <img src="{% static '/images/header1.jpg' %}" alt="Description of the image" class="w-full h-56 rounded-lg" />
+        </div>
+        <div class="float-left">
+            <p class="font-bold m-4">जावक क्र./No. :</p>
+        </div>
+        <div class="float-right">
+            <p class="font-bold float-right mt-2 pr-20 mr-12">दिनांक/Date:</p>
+        </div>
+        <br><br><br>
+        <div class="text-1xl text-left m-2 p-2">
+          <div class="text-1xl text-left m-2 p-2">
+            {% for provider_name, subproducts_group in grouped_subproducts.items %}
+                <p>
+                    To. <br />
+                    {{ provider_name }} <br />
+                    {% for subproduct in subproducts_group %}
+                        {{ subproduct.amc_provider.address }} <br />
+                        {{ subproduct.amc_provider.state }},{{ subproduct.amc_provider.pincode }}
+                    {% endfor %}
+                </p>
+            {% endfor %}
+     
+        
+      
+            <div class="flex justify-center p-4">
+              <p>
+                  <b>Sub:-</b> Supply of {{ subproduct.type_of_part }} for {{ product.name }} Instrument. ( Sr. No. {{ product.sr_no }})<br>
+                  {% for provider_name, subproducts_group in grouped_subproducts.items %}
+                  <b>Ref:-  </b>      Service report dated for item
+                      {% for subproduct in subproducts_group %}
+                          {% with subproduct.quotationitem_set.first as quotationitem %}
+                         {{ subproduct.part_name }} -{{ subproduct.service_report_date }} ,
+                          {% endwith %}
+                      {% endfor %}
+                  {% endfor %}
+              </p>
+          </div>
+          
+          
+
+                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Your Quotation No.- {{ quotationinfo.ref_no }} dated-{{ quotationinfo.date }} -->
+                    </p>
+                    
+                </div>
+                <div class="w-[600] text-left">
+                    {% for quotation in quotations %}
+                    <p>Sir,<br> With reference to your quotation No {{ quotation.ref_no }} at Reference above, it is requested to supply & install the following items for the best performance of the equipment at </p>
+                {% endfor %}
+                
+                        {% if letter.lab_name == "Mumbai" %}
+                        Directorate of forensic Science Laboratories, Mumbai
+                        {% else %}
+                        Regional Forensic Science Laboratory, {{ letter.lab_name }}
+                        {% endif %}
+                  
+                    & submit your invoice along with delivery challan & installation report to this department immediately. </p>
+                </div>
+            </div>
+            <div class="flex justify-center p-10 ">
+
+                    
+
+                        <div class="flex justify-center">
+
+                            <table class="border border-collapse w-auto" style="page-break-inside: avoid;">
+                                <thead>
+                                    <tr>
+                                        <th class="border p-8 m-2">Part No & Description</th>
+                                        <th class="border p-8 m-2">Qty</th>
+                                        <th class="border p-8 m-2">Unit Price in INR</th>
+                                        <th class="border p-8 m-2">Total Price in INR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for provider_name, subproducts_group in grouped_subproducts.items %}
+                                    {% for subproduct in subproducts_group %}
+                                    {% with subproduct.quotationitem_set.first as quotationitem %}
+                                    <tr>
+                                        <td class="border">{{ subproduct.part_name }} <br> Specification-<br> {{ subproduct.specification }}</td>
+                                        <td class="border text-center">{{ subproduct.quantity }}</td>
+                                        {% if quotationitem %}
+                                        <td class="border p-10 m-2">{{ quotationitem.unit_price }} /-</td>
+                                        <td class="border p-10 m-2 text-center">{% multiply quotationitem.unit_price subproduct.quantity %}/-</td>
+                                        {% else %}
+                                        <td class="border p-10 m-2">N/A</td>
+                                        <td class="border p-10 m-2">N/A</td>
+                                        {% endif %}
+                                    </tr>
+                                    {% endwith %}
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan="2" class="border"></td>
+                                        <th class="border text-left">Total Basic Price in INR</th>
+                                        <td class="border text-center">{{ subproducts_group|multiply_and_add_total_basic_price }}/-</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="border"></td>
+                                        <th class="border text-left">+18% GST</th>
+                                        <td class="border text-center">
+                                            {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+                                            {% with gst_value=total_basic_price|calc:0.18 %}
+                                            {{ gst_value }}/-
+                                            {% endwith %}
+                                            {% endwith %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="border"></td>
+                                        <th class="border text-left">Total Price inclusive of GST</th>
+                                        <td class="border p-10 m-2 text-center">
+                                            {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+                                            {% with gst_value=total_basic_price|calc:0.18 %}
+                                            {% with total_price_inclusive=total_basic_price|add:gst_value %}
+                                            {{ total_price_inclusive}}/-
+                                            {% endwith %}
+                                            {% endwith %}
+                                            {% endwith %}
+
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    
+
+            </div><br>
+        </div>
+        
+        <div class="float-right">
+            <p class="px-32">Yours</p><br><br>
+            <p class="text-center">(Dr. S.V. Ghumatkar) Director</p>
+            <p>Directorate of Forensic Science Laboratories,</p>
+            <p>M.S.and Chemical Analyser to Government.</p>
+        </div><br>
+        <div>
+            <p class="px-8">Thanking You </p>
+            <br><br><br><br>
+            <p> Copy to:-</p>
+            {% if letter.lab_name == "Mumbai" %}
+            <p>The Deputy Director, Directorate of forensic Science Laboratories, Mumbai </p><br><br>
+            <p>For information w.r.t to your Letter No:- {{ letter.letter_no }} Dated :- {{ letter.letter_date }}</p>
+
+            {% else %}
+            The Deputy Director Regional Forensic Science Laboratory, {{ letter.lab_name }}
+            For information w.r.t to your Letter no:- {{ letter.letter_no }} Dated :- {{ letter.letter_date }}
+
+            {% endif %}
+
+        </div>
+    </div>
+</body>
+
+</html>

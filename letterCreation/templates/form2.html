@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Form</title>
+    <script>
+        function addProduct() {
+            const productTable = document.getElementById('productTable');
+            const newRow = productTable.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" name="type_of_part[]" class="w-full"></td>
+                <td><input type="text" name="part_name[]" class="w-full"></td>
+                <td><input type="text" name="specification[]" class="w-full"></td>
+                <td><input type="number" name="quantity[]" class="w-full"></td>
+                <td><input type="date" name="buying_date[]" class="w-full"></td>
+                <td><input type="number" name="price[]" step="0.01" class="w-full"></td>
+                <td><input type="text" name="amc_period[]" class="w-full"></td>
+                <td><input type="text" name="amc_provider[]" class="w-full"></td>
+                <td><button type="button" onclick="removeProduct(this)">Remove</button></td>
+            `;
+        }
+
+        function removeProduct(button) {
+            const row = button.parentElement.parentElement;
+            row.remove();
+        }
+    </script>
+</head>
+<body>
+    <h1>Letter Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="lab_name">Lab Name:</label>
+        <input type="text" name="lab_name" id="lab_name"><br><br>
+        <label for="products">Products:</label>
+        <table id="productTable">
+            <tr>
+                <th>Type of Part</th>
+                <th>Part Name</th>
+                <th>Specification</th>
+                <th>Quantity</th>
+                <th>Buying Date</th>
+                <th>Price of Item</th>
+                <th>Period of AMC Contract</th>
+                <th>AMC Provider</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td><input type="text" name="type_of_part[]" class="w-full"></td>
+                <td><input type="text" name="part_name[]" class="w-full"></td>
+                <td><input type="text" name="specification[]" class="w-full"></td>
+                <td><input type="number" name="quantity[]" class="w-full"></td>
+                <td><input type="date" name="buying_date[]" class="w-full"></td>
+                <td><input type="number" name="price[]" step="0.01" class="w-full"></td>
+                <td><input type="text" name="amc_period[]" class="w-full"></td>
+                <td><input type="text" name="amc_provider[]" class="w-full"></td>
+                <td><button type="button" onclick="removeProduct(this)">Remove</button></td>
+            </tr>
+        </table>
+        <button type="button" onclick="addProduct()">Add Product</button><br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

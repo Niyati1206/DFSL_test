@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap">
+  
+    
+</head>
+<body>
+  
+  <div class="flex justify-center items-center flex-col space-y-1.5 p-6">
+
+    <h3 class="font-sans font-semibold whitespace-nowrap tracking-tight text-2xl">Vendor Master</h3>  
+    <div class="mx-auto max-w-3xl rounded-lg ">
+    <div class="min-h-screen py-40 grid gap-6 px-8 md:px-90">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-3xl" data-v0-t="card">
+        <!-- <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="font-semibold whitespace-nowrap tracking-tight text-2xl">Vendor Information</h3>
+          <p class="text-sm text-muted-foreground">
+            Enter the details of the vendor below
+          </p>
+          
+        </div> -->
+      
+    </div>
+
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-4xl bg-indigo" data-v0-t="card">
+      <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="font-semibold whitespace-nowrap tracking-tight text-2xl">Vendor Information</h3>
+          <p class="text-sm text-muted-foreground">
+              Add more information here
+          </p>
+      </div>
+      <form class="w-[1200px] p-6 grid gap-4" action="#" method="post">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="registration-no">Registration No</label>
+                  <input class="flex w-80 h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="registration-no" placeholder="Enter registration no">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="tax-invoice">Tax Invoice</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="tax-invoice" placeholder="Enter tax invoice">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="challan-no">Challan No</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="challan-no" placeholder="Enter challan no">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="order-no">Order No</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="order-no" placeholder="Enter order no">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="state-name">State Name</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="state-name" placeholder="Enter state name">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="gstn-uino">GSTN/UINO</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="gstn-uino" placeholder="Enter GSTN/UINO">
+              </div>
+              <div class="flex flex-col gap-1">
+                  <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="email-id">Email ID</label>
+                  <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email-id" placeholder="Enter email id">
+              </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+      </form>
+  </div>
+      
+
+
+   
+   
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,183 @@
+{% extends 'sidebar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Report History</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Poppins',sans-serif;
+        }
+        .content-wrapper {
+            margin: 25px auto;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .search-bar {
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .search-input {
+            float: right;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #3ab1df;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .print-button {
+            border: 1px solid #3ab1df; 
+            background-color: transparent; 
+            color: #3ab1df; 
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s; 
+            font-weight: bold;
+        }
+
+        .print-button:hover {
+            background-color: #3ab1df; 
+            color: #fff; 
+        }
+
+        .shadow-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+            color: #3ab1df; 
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 17px;    
+            width: 100%;
+        }
+
+        .content-table thead tr {
+            background-color: #3ab1df;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+            border: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-7xl mx-auto">
+        <div class="content-wrapper">
+            <div class="search-bar">
+                <input type="text" id="search" class="search-input" placeholder="Search...">
+                <h1 class="text-3xl font-bold mb-8 shadow-text">Service Report History</h1>
+                <div class="search-icon">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-5a8 8 0 11-16 0 8 8 0 0116 0zm-8 0a2 2 0 100-4 2 2 0 000 4z" />
+                    </svg>
+                </div>
+            </div>
+
+            <table id="serviceReportTable" class="content-table">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-200 px-4 py-2">Product Serial No</th>
+                        <th class="border border-gray-200 px-4 py-2">Product Name</th>
+                        <th class="border border-gray-200 px-4 py-2">Lab Name</th>
+                        <th class="border border-gray-200 px-4 py-2">Service Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        {% for report in product.service_reports.all %}
+                            <tr>
+                                {% if forloop.first %}
+                                    <td rowspan="{{ product.service_reports.count }}" class="border border-gray-200 px-4 py-2">{{ product.sr_no }}</td>
+                                    <td rowspan="{{ product.service_reports.count }}" class="border border-gray-200 px-4 py-2">{{ product.main_item.name }}</td>
+                                    <td rowspan="{{ product.service_reports.count }}" class="border border-gray-200 px-4 py-2">{{ product.lab_name.name }}</td>
+                                {% endif %}
+                                <td class="border border-gray-200 px-4 py-2">{{ report.service_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search');
+        const rows = document.querySelectorAll('.content-table tbody tr');
+
+        searchInput.addEventListener('input', function () {
+            const searchText = this.value.toLowerCase().trim();
+
+            rows.forEach(row => {
+                let isVisible = false;
+                row.querySelectorAll('td').forEach(cell => {
+                    if (cell.textContent.toLowerCase().includes(searchText)) {
+                        isVisible = true;
+                    }
+                });
+
+                if (isVisible) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
+</html>
+{% endblock %}

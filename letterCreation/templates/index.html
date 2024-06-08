@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DFSL Home page</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins',sans-serif;
+    }
+    .hero{
+    
+    width: 100%;
+    min-width: 100vh;
+    /* display: flex;
+    align-items: center; */
+    /* background-color: bisque; */
+    background-position: center;
+    background-size: cover;
+    padding: 10px 10%;
+    overflow: hidden;
+    position: relative;
+      }
+      nav{
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: large;
+        /* background-color: bisque; */
+      }
+      .logo{
+        width: 140px;
+      }
+      nav ul li{
+        display: inline-block;
+        list-style: none;
+    margin: 10px 15px;
+      }
+      nav ul li a{
+        text-decoration: none;
+        color: #333;
+        font-weight: 400;
+      }
+      .btn{
+        /* text-decoration:  none;
+        color: #333;
+        margin-right: 15px;
+        font-weight: 400; */
+        display: inline-block;
+        text-decoration: none;
+        padding: 14px 40px;
+        color: #fff;
+        background-image: linear-gradient(to right top, #2fd3da, #00b4db, #0093d9, #006fcc, #1947af);        background-color: #3ab1df;
+        font-size:  14px;
+        border-radius: 30px;
+        border-top-right-radius: 0;
+        transition: 0.5s;
+      }
+      .content{
+        /* background-color: bisque; */
+        margin-top: 100px;
+        margin-left: 100px;
+        max-width: 600px;
+      }
+      .content h1{
+        font-size: 70px;
+        color: #222;
+    
+      }
+      .content p{
+        margin: 10px 0px 30px ;
+        color : #333;
+        line-height: 1.6;
+      }
+      .content .btn{
+        padding:  15px 80px;
+        font-size: 16px;
+      }
+      .btn:hover{
+        border-top-right-radius: 30px;
+      }
+      
+      .feature-img{
+        width:  540px;
+        position: absolute;
+        bottom: 0;
+    right: 10%;
+    top: 20%;
+      }
+    /* body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+      }
+      
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #efd1b9;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      nav a {
+        text-decoration: none;
+        color: #333;
+        padding: 10px 15px;
+        font-weight: bold;
+      }
+      
+      .logo {
+        width: 200px;
+      }
+    
+      .herotext {
+        text-align: left;
+        padding: 50px;
+      }
+     
+      img{
+        height: 400px;
+        width: fit-content;
+      }
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+      
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      
+      a {
+       
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+      
+
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* horizontal-offset vertical-offset blur-radius color */
+        /* You can adjust the values of horizontal-offset, vertical-offset, and blur-radius to change the shadow effect */
+    /* } */
+      
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="hero">
+        <nav>
+          {% comment %} <img src="{% static '/images/logofinal.png' %}" alt="DFSL Logo" class="logo"/> {% endcomment %}
+          {% comment %} <ul>
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">ABOUT US</a></li>
+            <li><a href="#">SERVICES</a></li>
+            <li><a href="#">CONTACT US</a></li>
+          </ul> {% endcomment %}
+          <p class="text-4xl text-shadow">DFSL</p>
+          <div>
+            <a href="/admin" class="btn">Admin Login</a>
+            <a href="/letterGenerate/form" class="btn">Add Info</a><br><br>
+
+            <!-- <a href="#">Sign up</a> -->
+          </div>
+        </nav>
+        <hr>
+      </div>
+      <div class="content">
+        <h1>Welcome to <br> DFSL Mumbai!</h1>
+        <p>Forensic Science Laboratory, Mumbai was first established in 1958 at Sir J.J. Group of Hospitals
+            with a handful of experts and staff. Today, Maharashtra FSL has emerged into a full-size 'Directorate'
+             having its headquarters at Santacruz, Kalina, Mumbai.</p>
+        <a href="#" class="btn">Learn More</a>
+      </div>
+      <img src="{% static '/images/govtbldg.svg' %}" alt="Government Building" class="feature-img" />
+    </main>
+    {% include 'footer.html' %}
+
+  </body>
+</html>

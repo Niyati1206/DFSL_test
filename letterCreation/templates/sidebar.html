@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #fff;
+            display: flex;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 300px;
+            border-left: 5px solid #01a1df;
+            background-color: #3ab1df;
+            padding-top: 40px;
+            transition: width 0.3s, transform 0.3s;
+        }
+
+        .sidebar-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            padding: 10px 0;
+            background-color: #01a1df;
+        }
+
+        .navigation ul {
+            list-style-type: none;
+        }
+
+        .navigation a {
+            font-size: 15px;
+            color: #F5F5F5;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .navigation .dropdown {
+            position: relative;
+        }
+
+        .navigation .dropdown > a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navigation .dropdown-content {
+            display: none;
+            flex-direction: column;
+            padding-left: 20px;
+        }
+
+        .navigation .dropdown.active .dropdown-content {
+            display: flex;
+        }
+
+        .navigation ul li {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .navigation ul li.active {
+            background: #F5F5F5;
+        }
+
+        .navigation ul li.active a {
+            color: #333;
+        }
+
+        .toggle {
+            display: none;
+        }
+
+        main.content {
+            margin-left: 300px;
+            padding: 20px;
+            width: calc(100% - 300px);
+            transition: margin-left 0.3s, width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                width: 70px;
+                padding-top: 0;
+                transform: translateX(-100%);
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .navigation a {
+                padding: 10px;
+            }
+
+            .navigation .dropdown > a .title {
+                display: none;
+            }
+
+            main.content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+            }
+
+            .toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: #3ab1df;
+                border-radius: 10px;
+                cursor: pointer;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            .toggle ion-icon {
+                font-size: 34px;
+                color: #fff;
+            }
+
+            .navigation.active {
+                transform: translateX(0);
+            }
+
+            .navigation.active .sidebar-title,
+            .navigation.active a .title {
+                display: inline;
+            }
+
+            main.content.active {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <div class="sidebar-title">DFSL</div>
+        <div class="dropdown">
+            <a href="#" style="font-size: 18px; font-weight: 800; color: #ffffff;"><ion-icon name="create-outline" style="font-size: larger;font-weight: 800;"></ion-icon>Forms and Letters <i class="fa fa-sort-down" ></i></a>
+            <ul class="dropdown-content">
+                <li class="list"><a href="/letterGenerate/form"><ion-icon name="create-outline"></ion-icon> <span class="title">Product Form</span></a></li>
+                <li class="list"><a href="/letterGenerate/products"><ion-icon name="folder-open-outline"></ion-icon> <span class="title">Office Quotation Request</span></a></li>
+                <li class="list"><a href="/letterGenerate/products4"><ion-icon name="document-text-outline"></ion-icon> <span class="title">Supplier Quotation Request</span></a></li>
+                <li class="list"><a href="/letterGenerate/quotations"><ion-icon name="create-outline"></ion-icon> <span class="title">Quotations</span></a></li>
+                <li class="list"><a href="/letterGenerate/products6"><ion-icon name="checkbox-outline"></ion-icon> <span class="title">Office Quotation Approval</span></a></li>
+                <li class="list"><a href="/letterGenerate/products7"><ion-icon name="checkmark-done-outline"></ion-icon> <span class="title">Supplier Quotation Approval</span></a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <a href="#" style="font-size: 18px;font-weight: 800; color: white;"><ion-icon name="folder-open-outline" style="font-size: larger;font-weight: 800;"></ion-icon>Information <i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-content">
+                <li class="list"><a href="/letterGenerate/amc-providers"><ion-icon name="create-outline"></ion-icon> <span class="title">AMC Providers</span></a></li>
+                <li class="list"><a href="/letterGenerate/service-report-history/"><ion-icon name="folder-open-outline"></ion-icon> <span class="title">Service Report History</span></a></li>
+                <li class="list"><a href="/letterGenerate/products4"><ion-icon name="document-text-outline"></ion-icon> <span class="title">Items</span></a></li>
+                <li class="list"><a href="/letterGenerate/quotations"><ion-icon name="create-outline"></ion-icon> <span class="title">Manufacturers</span></a></li>
+                <li class="list"><a href="/letterGenerate/products6"><ion-icon name="checkbox-outline"></ion-icon> <span class="title">Tracking</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <main class="content">
+        <div class="container-fluid">
+            <div class="mb-3">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdowns = document.querySelectorAll('.dropdown > a');
+            const list = document.querySelectorAll('.list');
+
+            dropdowns.forEach((dropdown, index) => {
+                dropdown.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const parent = dropdown.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+
+            list.forEach((el, index) => el.addEventListener('click', () => {
+                localStorage.setItem('SelectedTabIndex', index);
+                list.forEach(item => item.classList.remove('active'));
+                el.classList.add('active');
+            }));
+
+            const selectedTabIndex = localStorage.getItem('SelectedTabIndex');
+            if (selectedTabIndex !== null) {
+                list[selectedTabIndex].classList.add('active');
+            }
+
+            const toggleButton = document.querySelector('.toggle');
+            const navigation = document.querySelector('.navigation');
+            const content = document.querySelector('main.content');
+
+            toggleButton.addEventListener('click', () => {
+                navigation.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
