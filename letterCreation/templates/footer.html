@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DFSL Home page</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      text-size:10px;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins',sans-serif;
+      
+    }
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      {% comment %} padding: 10px; {% endcomment %}
+      text-align: center;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+    }
+
+    p{
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body class="flex flex-col">
+  <!-- Your main content goes here -->
+  <main class="flex-grow">
+    <div class="flex-center h-full">
+      <div>
+        <!-- Your main content goes here -->
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white">
+    <p>&copy; 2024 Directorate of Forensic Science Laboratories, Mumbai.<br> Developed by K. J. Somaiya Institute of Technology.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+/* Add any custom styles here */
+.custom-color {
+    color: #3ab1df;
+}
+.custom-bg {
+    color: #3ab1df;
+}
+.bg-custom-color:hover {
+    background-color: #3ab1df; /* Darker shade for hover effect */
+}
+.content-wrapper {
+    margin: 25px auto;
+    width: 100%;
+    max-width: 900px; /* Adjust maximum width as needed */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fadeIn 1s ease-in-out;
+}
+.content-table {
+    border-collapse: collapse;
+    margin: auto;
+    font-size: 17px;
+    width: 100%;
+}
+.content-table thead tr {
+    background-color: #3ab1df;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+    border: none; /* Remove inner borders */
+}
+.content-table tbody tr {
+    border-bottom: 1px solid #3ab1df; /* Only bottom border */
+}
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #3ab1df;
+}
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #3ab1df;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.search-bar {
+    position: relative;
+    margin-top: 20px;
+}
+.search-input {
+    float: right;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.search-input:focus {
+    border-color: #3ab1df;
+}
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #ccc;
+    cursor: pointer;
+}
+
+.shadow-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    color: #3ab1df; /* Text color */
+}

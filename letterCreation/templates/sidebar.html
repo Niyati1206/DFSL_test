@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #fff;
+            display: flex;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 284px;
+            border-left: 5px solid #01a1df;
+            background-color: #3ab1df;
+            overflow-x: hidden;
+            transition: width 0.3s;
+            display: flex;
+            flex-direction: column;
+            {% comment %} align-items: center; {% endcomment %}
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .sidebar-header .sidebar-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .sidebar-header a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .navigation ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .navigation ul li {
+            width: 100%;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navigation ul li a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: #F5F5F5;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navigation ul li a .icon {
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .navigation ul li a .title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .navigation ul li.active {
+            background: #F5F5F5;
+        }
+
+        .navigation ul li.active a {
+            color: #333;
+        }
+
+        .toggle {
+            display: none;
+        }
+
+        main.content {
+            margin-left: 300px;
+            padding: 20px;
+            width: calc(100% - 300px);
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                width: 70px;
+                padding-top: 20px;
+            }
+
+            .navigation ul li a .title {
+                display: none;
+            }
+
+            main.content {
+                margin-left: 70px;
+                width: calc(100% - 70px);
+            }
+
+            .toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: #3ab1df;
+                border-radius: 10px;
+                cursor: pointer;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            .toggle ion-icon {
+                font-size: 34px;
+                color: #fff;
+            }
+
+            .navigation.active {
+                width: 300px;
+            }
+
+            .navigation.active ul li a .title {
+                display: inline;
+            }
+
+            main.content.active {
+                margin-left: 300px;
+                width: calc(100% - 300px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <div class="sidebar-header">
+            <a href="/">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+                <div class="sidebar-title">DFSL</div>
+            </a>
+        </div>
+        <ul>
+            <li class="list">
+                <a href="/letterGenerate/form">
+                    <span class="icon"><ion-icon name="create-outline"></ion-icon></span>
+                    <span class="title">Product Form</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/letterGenerate/products">
+                    <span class="icon"><ion-icon name="folder-open-outline"></ion-icon></span>
+                    <span class="title">Office Quotation Request</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/letterGenerate/products4">
+                    <span class="icon"><ion-icon name="document-text-outline"></ion-icon></span>
+                    <span class="title">Supplier Quotation Request</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/letterGenerate/quotations">
+                    <span class="icon"><ion-icon name="create-outline"></ion-icon></span>
+                    <span class="title">Quotations</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/letterGenerate/products6">
+                    <span class="icon"><ion-icon name="checkbox-outline"></ion-icon></span>
+                    <span class="title">Office Quotation Approval</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/letterGenerate/products7">
+                    <span class="icon"><ion-icon name="checkmark-done-outline"></ion-icon></span>
+                    <span class="title">Supplier Quotation Approval</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="toggle">
+        <ion-icon name="menu-outline"></ion-icon>
+    </div>
+    <main class="content">
+        <div class="container-fluid">
+            <div class="mb-3">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>    
+    <script>
+        let list = document.querySelectorAll('.list');
+        list.forEach((el, index) => el.addEventListener('click', () => {
+            localStorage.setItem('SelectedTabIndex', index);
+        }));
+        let selectedTabIndex = localStorage.getItem('SelectedTabIndex');
+        if (selectedTabIndex !== null) {
+            list[selectedTabIndex].classList.add('active');
+        }
+
+        const toggleButton = document.querySelector('.toggle');
+        const navigation = document.querySelector('.navigation');
+        const content = document.querySelector('main.content');
+
+        toggleButton.addEventListener('click', () => {
+            navigation.classList.toggle('active');
+            content.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

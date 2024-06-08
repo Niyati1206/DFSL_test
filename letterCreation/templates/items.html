@@ -1,0 +1,152 @@
+{% extends 'sidebar.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product List</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/product_style.css' %}">
+
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 p-6 md:p-8">
+
+  <!-- Message Section -->
+  {% if messages %}
+  <div class="mb-4">
+    {% for message in messages %}
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+      <span class="block sm:inline">{{ message }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="content-wrapper">
+    <div class="search-bar">
+      <input type="text" id="manufacturerSearch" placeholder="Search by Manufacturer..." class="search-input">
+      <h1 class="text-3xl font-bold mb-8 shadow-text">Product List</h1>
+      <div class="search-icon">
+        <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-5a8 8 0 11-16 0 8 8 0 0116 0zm-8 0a2 2 0 100-4 2 2 0 000 4z" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="px-6 py-3">Name</th>
+            <th class="px-6 py-3">Manufacturer</th>
+            <th class="px-6 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in mitem %}
+          <tr>
+            <td class="px-4 py-2">{{ data.name }}</td>
+            <td class="px-4 py-2">{{ data.manufacturer.name }}</td>
+            <td class="px-4 py-2">
+              <div class="flex space-x-4">
+                <button onclick="openEditModal('{{ data.id }}', '{{ data.name }}', '{{ data.manufacturer.name }}')" class="icon-button">
+                  <!-- Edit Icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-green-500 dark:text-green-400">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"></path>
+                  </svg>
+                </button>
+                <form id="deleteForm_{{ data.id }}" action="{% url 'delete_item' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ data.id }}">
+                  <button type="submit" class="icon-button">
+                    <!-- Delete Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-red-500 dark:text-red-400">
+                      <path d="M3 6h18"></path>
+                      <path d="M19 6l-2 14H7L5 6"></path>
+                      <path d="M10 11v6"></path>
+                      <path d="M14 11v6"></path>
+                      <path d="M5 6l1-3h12l1 3"></path>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 w-96">
+      <div class="bg-blue-500 text-white p-4 rounded-t-lg">
+        <h3 class="text-lg font-semibold">Edit Product</h3>
+      </div>
+      <form id="editForm" action="{% url 'edit_item' %}" method="post" class="px-6 py-4 space-y-4">
+        {% csrf_token %}
+        <input type="hidden" name="id" id="editId">
+        <div>
+          <label for="editName" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Name</label>
+          <input type="text" name="name" id="editName" class="mt-1 block w-full shadow-sm sm:border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
+        </div>
+        <div>
+          <label for="editManufacturer" class="block text-sm font-medium text-gray-700 dark:text-gray-400">Manufacturer</label>
+          <input type="text" name="manufacturer" id="editManufacturer" class="mt-1 block w-full shadow-sm sm:border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
+        </div>
+        <div class="flex justify-end space-x-2">
+          <button type="button" onclick="closeEditModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500">
+            Cancel
+          </button>
+          <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Function to filter product list by manufacturer
+    function filterProducts() {
+      var input, filter, table, tbody, tr, td, i, txtValue;
+      input = document.getElementById("manufacturerSearch");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".content-table");
+      tbody = document.querySelector("tbody");
+      tr = tbody.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1]; // Index 1 corresponds to Manufacturer column
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    // Event listener for input change
+    document.getElementById("manufacturerSearch").addEventListener("input", filterProducts);
+
+    function openEditModal(id, name, manufacturerName) {
+      document.getElementById('editId').value = id;
+      document.getElementById('editName').value = name;
+      document.getElementById('editManufacturer').value = manufacturerName;
+      document.getElementById('editModal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
+{% endblock %}

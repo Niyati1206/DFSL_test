@@ -1,0 +1,118 @@
+{% extends 'sidebar.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .custom-color {
+            color: #3593aa;
+        }
+
+        .bg-custom-color:hover {
+            background-color: #2c7da0; /* Darker shade for hover effect */
+        }
+
+        /* Apply new style code */
+        .content-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+            /* Animation effect */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .content-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .content-table th,
+        .content-table td {
+            padding: 12px 15px;
+        }
+
+        .content-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .content-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .content-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .content-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">Product Information</h1>
+        <div class="relative md:float-right md:bottom-32">
+            <input type="text" id="search" class="border border-custom-color rounded-md py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-300 ease-in-out w-full md:w-auto" placeholder="Search...">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m4-5a8 8 0 11-16 0 8 8 0 0116 0zm-8 0a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Apply new style code to the existing table -->
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th class="border border-gray-200 px-4 py-2">Letter No</th>
+                    <th class="border border-gray-200 px-4 py-2">Lab Name</th>
+                    <th class="border border-gray-200 px-4 py-2">Letter Date</th>
+                    <th class="border border-gray-200 px-4 py-2">Product Name</th>
+                    <th class="border border-gray-200 px-4 py-2">Department</th>
+                    <th class="border border-gray-200 px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for letter in letters %}
+                {% for product in letter.products.all %}
+                <tr>
+                    <td class="border border-gray-200 px-4 py-2">{{ letter.letter_no }}</td>
+                    <td class="border border-gray-200 px-4 py-2">{{ letter.lab_name }}</td>
+                    <td class="border border-gray-200 px-4 py-2">{{ letter.letter_date }}</td>
+                    <td class="border border-gray-200 px-4 py-2">{{ product.name }}</td>
+                    <td class="border border-gray-200 px-4 py-2">{{ product.department_name }}</td>
+                    <td class="border border-gray-200 px-4 py-2">
+                        <a href="{% url 'letter_detail' product.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Print</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

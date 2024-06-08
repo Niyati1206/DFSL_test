@@ -1,0 +1,286 @@
+{% load static %}
+{% load custom_tags %}
+
+{% block variables %}
+    {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+        {% with gst_value=total_basic_price|calc:0.18 %}
+            {% with total_price_inclusive=total_basic_price|add:gst_value %}
+                {% with total_basic_price as global_total_basic_price %}
+                {% with gst_value as global_gst_value %}
+                {% with total_price_inclusive as global_total_price_inclusive %}
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+            {% endwith %}
+        {% endwith %}
+    {% endwith %}
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        
+    </style>
+    <title>Letter Format</title>
+</head>
+
+<body class="font-times text-lg">
+    <div class=" m-4 max-w-screen">
+        <div class="grid grid-cols-1 float-right">
+            <p class="font-bold">न्या. वै. प्र. शाळा, मुंबई.<br>भांडार विभाग,<br>दि. </p>
+        </div><br><br><br>
+        <div class="text-1xl text-left m-8">
+            <p>&emsp;&emsp;सादर,</p><br>
+
+            <p>&emsp;&emsp;<b> विषय :-</b> {{ product.name }} करिता {{ product.subproducts.all|unique_amc_providers }} यांचेकडून मागविण्यात आलेल्या दरपत्रकानुसार
+
+                {% for subproduct_type in product.subproducts.all|unique_values:"type_of_part" %}
+                {{ subproduct_type }},
+            {% endfor %} ची खरेदी करणे बाबत.</p><br>
+        
+        <ol class="list-decimal">
+            {% for subproduct in product.subproducts.all %}
+            {% if forloop.first or subproduct.amc_provider != product.subproducts.first.amc_provider %}
+                {% with subproduct.amc_provider as amc_provider %}
+                    <li class="m-4">
+                        <div class="properlyalign">
+                            <p>{{ letter.lab_name }} प्रयोगशाळेतील  {{ product.department_name }} प्रमुखांनी त्यांचे पत्र क्र. {{ product.letter.letter_no }} दि. {{ product.letter.letter_date }} व सव्र्व्हिस रिपोर्ट दि. {{ subproduct.service_report_date }}.</p>
+                        </div>
+                        <ul>
+                            <li class="m-4">
+                                <p>मा. संचालक यांना सादर करण्यात आलेला प्रस्ताव दि.          .</p>
+                            </li>
+                            <li class="m-4">
+                                <p>{{ amc_provider.name     }} यांना देण्यात आलेले पत्र क्र.             दि.           .</p>
+                            </li>
+                            <li class="m-4">
+                                {% for quotation in subproduct.quotationitem_set.all %}
+                                    <p>{{ amc_provider.name }} यांचे पत्र क्र. {{ quotation.quotation.ref_no }} दि.{{ quotation.quotation.quotation_date }}.</p>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </li>
+                {% endwith %}
+            {% endif %}
+        {% endfor %}
+        
+        </ol>
+        
+
+        <div>
+            <ul class="list-disc">
+                <div class="m-8">
+                    {% for subproduct in product.subproducts.all %}
+                        {% if forloop.first or subproduct.amc_provider != product.subproducts.first.amc_provider %}
+                            {% with subproduct.amc_provider as amc_provider %}
+                                <li>सहायक संचालक, {{ letter.lab_name }} प्रयोगशाळेतील {{ product.department_name }} विभाग यांनी पत्र संदर्भ क्र.{{forloop.counter}} अन्वये
+                                    {{ product.name }} करिता {{ amc_provider.name }} यांचे पुढील {{ subproduct.type_of_part }} ची मागणी केली आहे.</li>
+                            {% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </ul>
+        </div>
+        
+
+            <div class="flex justify-center p-6">
+                <table class="table-auto">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">Sr.No</th>
+                            <th class="border px-4 py-2">Description</th>
+                            <th class="border px-4 py-2">Req Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subproduct in product.subproducts.all %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ forloop.counter }}</td>
+                            <td class="border px-4 py-2">{{ subproduct.part_name }}<br>Specification: {{ subproduct.specification }}</td>
+                            <td class="border px-4 py-2">{{ subproduct.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div><br>
+            <div class="m-4">
+
+                <li>त्यानुसार मा. संचालक यांना {{ product.name }} च मुळ उत्पादकाने अधिकृत केलेली सेवा पुरवठादार कंपन्या
+                    {% for subproduct in product.subproducts.all|unique_values:"amc_provider__name" %}
+                    {{ subproduct }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                
+                {% for quotation in product.quotations.all %}
+                {% for quotation_item in quotation.quotation_items.all %}
+                    {% if forloop.parentloop.first %}
+                        <li>यांचेकडून उपरोक्त</li>
+                    {% endif %}
+                    {% for subproduct in quotation_item.subproducts.all %}
+                        {{ subproduct.type_of_part }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    खरेदीसाठी दरपत्रक मागविण्यास प्रस्ताव दि. सादर करण्यात आला व त्यास दि. रोजी मंजूरी प्राप्त झाली. त्यानुसार पत्र संदर्भ क्र. 3 अन्वये
+                    {{ quotation_item.amc_provider.name }}{% if not forloop.parentloop.last %}, {% endif %}
+                {% endfor %}
+                यांना उपरोक्त
+            {% endfor %}
+            
+            <ol class="list-decimal">
+                {% for provider, subproducts in grouped_subproducts.items %}
+                    {% if subproducts|length > 1 %}
+                        <li>
+                            {{ provider }} यांनी Quotation संदर्भ क्र.{{ forloop.counter }} अन्वये पूढीलप्रमाणे उपरोक्त {% for subproduct in subproducts %}{{ subproduct.type_of_part }}{% if not forloop.last %}, {% endif %}{% endfor %} साठी दर कळविले आहेत.
+                        </li>
+                    {% else %}
+                        {% for subproduct in subproducts %}
+                            <li>
+                                {{ provider }} यांनी Quotation संदर्भ क्र.{{ forloop.counter }} अन्वये पूढीलप्रमाणे उपरोक्त {{ subproduct.type_of_part }} साठी दर कळविले आहेत.
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </ol>
+            
+            
+            
+            
+
+<div class="flex justify-center p-10">
+ 
+
+    <table class="border border-collapse w-auto">
+        <thead>
+            <tr>
+                <th class="border p-8 m-2">Part No & Description</th>
+                <th class="border p-8 m-2">Qty</th>
+                <th class="border p-8 m-2">Unit Price in INR</th>
+                <th class="border p-8 m-2">Total Price in INR</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for provider_name, subproducts_group in grouped_subproducts.items %}
+                {% for subproduct in subproducts_group %}
+                    {% with subproduct.quotationitem_set.first as quotationitem %}
+                        <tr>
+                            <td class="border">{{ subproduct.part_name }} <br> Specification-<br> {{ subproduct.specification }}</td>
+                            <td class="border text-center">{{ subproduct.quantity }}</td>
+                            {% if quotationitem %}
+                                <td class="border p-10 m-2 text-center">{{ quotationitem.unit_price }} /-</td>
+                                <td class="border p-10 m-2 text-center">{% multiply quotationitem.unit_price subproduct.quantity %}/-</td>
+                            {% else %}
+                                <td class="border p-10 m-2 text-center">N/A</td>
+                                <td class="border p-10 m-2 text-center">N/A</td>
+                            {% endif %}
+                        </tr>
+                    {% endwith %}
+                {% endfor %}
+                <tr>
+                    <td colspan="2" class="border text-center"></td>
+                    <th class="border">Total Basic Price in INR</th>
+                    <td class="border text-center">{{ subproducts_group|multiply_and_add_total_basic_price }}/-</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="border text-center"></td>
+                    <th class="border">+18% GST</th>
+                    <td class="border text-center">
+                        {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+                            {% with gst_value=total_basic_price|calc:0.18 %}
+                                {{ gst_value }}.00/-
+                            {% endwith %}
+                        {% endwith %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="border"></td>
+                    <th class="border">Total Price inclusive of GST</th>
+                    <td class="border p-10 m-2 text-center">
+                        {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+                            {% with gst_value=total_basic_price|calc:0.18 %}
+                                {% with total_price_inclusive=total_basic_price|add:gst_value %}
+                                    {{ total_price_inclusive|floatformat:"2" }}
+                                {% endwith %}
+                            {% endwith %}
+                        {% endwith %}
+                    </td>
+                                                   
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+</div>
+<br>
+<div class="m-8">
+    {% with total_basic_price=subproducts_group|multiply_and_add_total_basic_price %}
+    {% with gst_value=total_basic_price|calc:0.18 %}
+    {% with total_price_inclusive=total_basic_price|add:gst_value %} 
+    <li>उपरोक्त मुद्दा क्र. 3 नुसार एकूण आवश्यक
+        {% for subproduct_type in product.subproducts.all|unique_values:"type_of_part" %}
+    {{ subproduct_type }}
+{% endfor %} ची किंमत रु. {{ global_total_basic_price }}/-
+        + रु. {{ global_gst_value }} (GST) = रु. {{ global_total_price_inclusive }}/-
+        अशी आहे.
+    </li><br>
+    {% endwith %}
+    {% endwith %}
+    {% endwith %}
+</div>
+
+{% if quotation_expense_criteria_text %}
+    <li>{{ quotation_expense_criteria_text }}</li><br>
+{% endif %}
+
+<li>मुद्दा क्र.4 नुसार आवश्यक
+    {% for subproduct_type in product.subproducts.all|unique_values:"type_of_part" %}
+        {{ subproduct_type }}
+    {% endfor %}
+    {% if quotation_expense_criteria_text %}
+      
+        ची एकूण प्रस्तावित खरेदी रु. {{ global_total_price_inclusive }}/- GST सह आहे. सदरची रक्कम यंत्रसामग्री पुस्तके किंमतीच्या {% if '25%' in quotation_expense_criteria_text %}२५{% else %}२०{% endif %} % मर्यादेत 
+    {% endif %}
+    (यंत्रसामग्री पुस्तकी किंमत रु. {{ product.price }}/-) असल्याने, मा. महोदयांना विनंती करण्यात येते की, उपरोक्त नमूद केलेल्या अधिकारानुसार, 
+    {% with quotationitem=subproduct.quotationitem_set.first %}
+        {{ quotationitem.amc_provider.name }}
+    {% endwith %}
+    यांचेकडून प्रस्तावात नमूद केलेल्या
+    {% for subproduct_type in product.subproducts.all|unique_values:"type_of_part" %}
+                {{ subproduct_type }},
+            {% endfor %}
+    ची खरेदी करण्यास व त्यानुसार खरेदी आदेश वितरित करण्यास मंजूरी प्रदान करावी.</li>
+</div>
+
+
+                </ul>
+        </div><br>
+        <div class="m-8">
+            <p>
+                श्री. वि. ग. विरकर <br>
+                वरिष्ठ लिपीक </p><br><br>
+
+            <p>श्री. र. वि. गावीत<br>
+                सहायक अधिक्षक (भांडार)</p><br> <br>
+
+            <p> श्री. प्र. ज. कदम<br>
+        प्रशासकीय अधिकारी (भांडार)</p><br><br>
+        
+        <p>श्री.सं.शा.प्रभावळे <br>
+        सहा. संचालक तथा भांडार विभाग नियंत्रक.</p><br><br>
+        
+        <p> डॉ.सं.औ. चेट्टी <br>
+        उपसंचालक तथा सदस्य सचिव</p><br><br>
+        
+        <p>डॉ. सं. वि. घुमटकर, <br> 
+        संचालक 
+        </p>
+        
+  </div>
+    </div>
+    
+</body>
+</html> 

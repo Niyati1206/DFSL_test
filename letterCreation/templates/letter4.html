@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <title>Supplier quotation request</title>
+</head>
+<body class="font-times text-lg">
+    <div class="relative">
+        <div class="img">
+            {% load static %}
+            <img src="{% static '/images/header1.jpg' %}" alt="Description of the image" class="w-full h-64 rounded-lg" />
+        </div>
+        <div class="float-left">
+            <p class="font-bold m-8 p-4">जावक क्र./No. :</p>
+        </div>
+        <div class="float-right">
+            <p class="font-bold float-right m-8 pr-20 mr-12">दिनांक/Date:</p>
+        </div>
+        <br><br><br>
+        <div class="text-1xl text-left m-8 p-8">
+            <p>
+                To. <br />
+                {{ amc_provider.name }} <br />
+                {{ amc_provider.address }}<br />
+              {{ amc_provider.state }}- {{ amc_provider.pincode }}.
+            </p>
+            <div>
+                <div class="flex justify-center p-6">
+                    <p>
+                        <b>Sub:-</b> Quotation for supply of
+                        {% for subproduct in related_subproducts %}
+                            {{ subproduct.type_of_part }}
+                        {% endfor %}
+                        for {{ product.name }} Instrument. <br />                        <b>Ref:-</b> Your Service report dated {{ service_report_date }} .
+                    </p>
+                </div>
+                <div class="w-[600] text-justify">
+                    It is requested to submit your lowest quotation immediately to the Mumbai office for the supply and successful installation of following spares/consumables required for {{product.name}}- instrument Sr.no{{product.sr_no}} located at  
+                      {% if letter.lab_name == "Mumbai" %}
+                    Directorate of forensic Science Laboratories, Mumbai
+                    {% else %}
+                    Regional Forensic Science Laboratory, {{ letter.lab_name }}
+                    {% endif %}. 
+
+                
+                </div>
+            </div>
+            <div class="flex justify-center p-6">
+                <table class="table-auto" style="page-break-inside: avoid;">
+                    <thead>
+                        <tr>
+                            <th class="border px-4 py-2">Sr.No</th>
+                            <th class="border px-4 py-2">Description</th>
+                            <th class="border px-4 py-2">Type of Part</th>
+                            <th class="border px-4 py-2">Req Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subproduct in related_subproducts %}
+                        <tr>
+                            <td class="border px-4 py-2 text-left">{{ forloop.counter }}</td>
+                            <td class="border px-4 py-2 text-left">
+                                {{ subproduct.part_name }}<p> Specification {{ subproduct.specification }}</p>
+                            </td>
+                            <td class="border px-4 py-2">{{ subproduct.type_of_part }}</td>
+                            <td class="border px-4 py-2">{{ subproduct.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+              
+            </div>
+            <br>
+            <p class="ml-8">Thanking You</p><br>
+            <br><br><br>
+        </div><br>
+        <div class="ml-12 bottom-0 right-0 absolute">
+            <b><p class="text-center">Yours <br></p><br><br>
+            <b><p class="text-center">(Dr. S.V. Ghumatkar) <br>Director.</p>
+            <p>Directorate of Forensic Science Laboratories,</p>
+            <p>M.S..and Chemical Analyser to Government.</p></b>
+        </div>
+    </div>
+</body>
+</html>

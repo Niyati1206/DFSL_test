@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manufacturer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for centering the content */
+    body, html {
+      height: 100%;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    /* Add border color to input boxes */
+    .container input {
+      border-color: #3ab1df; /* Light blue color */
+    }
+    
+    /* Add focus border color to input boxes */
+    .container input:focus {
+      border-color: #2563EB !important; /* Darker blue color when focused */
+      outline: none; /* Remove default outline */
+      box-shadow: 0 0 0 1px #2563EB; /* Add custom focus effect */
+    }
+    
+    .text-cust-color{
+      color: #3ab1df;
+    }
+
+    /* Style for active and inactive tabs */
+[role="tab"] {
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  border-radius: 0.375rem;
+}
+
+[role="tab"][aria-selected="true"] {
+  background-color: #3ab1df ;
+}
+
+[role="tab"]:hover {
+  background-color: #1e40af;
+}
+
+[role="tab"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+}
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container h-screen">
+
+  <div dir="ltr" data-orientation="horizontal" class="w-full max-w-8xl">
+    <div
+      role="tablist"
+      aria-orientation="horizontal"
+      class="fixed top-0 z-10 h-8 items-center justify-center rounded-lg bg-gray-200 p-1 grid w-full grid-cols-2 "
+      tabindex="0"
+      data-orientation="horizontal"
+      style="outline: none;"
+    >
+      <button
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="radix-:r1e:-content-manufacturer-amc"
+        data-state="active"
+        id="radix-:r1e:-trigger-manufacturer-amc"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-300 text-gray-700 shadow p-22==="
+        tabindex="-1"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+      >
+        Manufacturer & AMC Provider
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="radix-:r1e:-content-main-item"
+        data-state="inactive"
+        id="radix-:r1e:-trigger-main-item"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-300 text-gray-700 shadow"
+        tabindex="-1"
+        data-orientation="horizontal"
+        data-radix-collection-item=""
+      >
+        Main Item
+      </button>
+    </div>
+    <div
+      data-state="active"
+      data-orientation="horizontal"
+      role="tabpanel"
+      aria-labelledby="radix-:r1e:-trigger-manufacturer-amc"
+      id="radix-:r1e:-content-manufacturer-amc"
+      tabindex="0"
+      class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      style=""
+    >
+  
+    <div class="ma-container">
+      <div class="rounded-lg border bg-white text-gray-700 shadow-sm ml-44 mr-44">
+        <div class="flex flex-col space-y-1.5 p-2">
+        </div>
+        <div class="p-6 space-y-4 mt-96">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight text-cust-color">Manufacturer</h3>
+          
+          <div class="grid grid-cols-2 gap-4 p-4 m-4">
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none text-cust-color"
+                for="manufacturer-name"
+              >
+                Name
+              </label>
+              <input
+                class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                id="manufacturer-name"
+                placeholder="Enter name"
+              />
+            </div>
+
+            <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="account-no"
+                >
+                  AC/NO
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter Account Number"
+                />
+              </div>
+            
+
+              
+            <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="Bank-name"
+                >
+                  Bank Name
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter Bank Name"
+                />
+              </div>
+
+
+              
+            <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="PAN-NO"
+                >
+                  PAN NO
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="pan-no"
+                  placeholder="Enter PAN NO"
+                />
+              </div>
+             
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="gstno"
+                >
+                  GST No
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter GST No"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="state"
+                >
+                  State
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter State"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="pincode"
+                >
+                  Pincode
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter Pincode"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="address"
+                >
+                  Address
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter Address"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="manufacturer-name"
+                >
+                  Email ID
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="manufacturer-name"
+                  placeholder="Enter Email ID"
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label
+                  class="text-sm font-medium leading-none text-cust-color"
+                  for="contact no"
+                >
+                  Contact No.
+                </label>
+                <input
+                  class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  id="contact-no"
+                  placeholder="Enter Contact No"
+                />
+              </div>
+
+          
+
+            <!-- Add more input fields for Manufacturer here -->
+          </div>
+        </div>
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight text-cust-color">AMC Provider</h3>
+        </div>
+        <div class="p-6 space-y-4 ml-8">
+          <div class="grid grid-cols-2 gap-4 " >
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none text-cust-color"
+                for="amc-provider-name">
+                Name
+              </label>
+              <input
+                class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                id="amc-provider-name"
+                placeholder="Enter name"
+              />
+            </div>
+            <div class="space-y-2">
+
+              <label
+                class="text-sm font-medium leading-none text-cust-color"
+                for="amc-provider-name">
+                Email
+              </label>
+              <input
+                class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                id="amc-provider-name"
+                placeholder="Enter name"
+              />
+            </div>
+            <!-- Add more input fields for AMC Provider here -->
+          </div>
+        </div>
+        <div class="flex items-center p-6">
+          <button
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-blue-500 text-white hover:bg-blue-600 h-10 px-4 py-2"
+            type="submit"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+    <div
+      data-state="inactive"
+      data-orientation="horizontal"
+      role="tabpanel"
+      aria-labelledby="radix-:r1e:-trigger-main-item"
+      hidden=""
+      id="radix-:r1e:-content-main-item"
+      tabindex="0"
+      class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+    >
+
+    <div class="item-container p-48">
+      <div class="rounded-lg border bg-white text-gray-700 shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight text-cust-color">Main Item</h3>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none text-cust-color"
+                for="main-item-name"
+              >
+                Name
+              </label>
+              <input
+                class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                id="main-item-name"
+                placeholder="Enter name"
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-sm font-medium leading-none text-cust-color"
+                for="main-item-manufacturer"
+              >
+                Manufacturer
+              </label>
+              <input
+                class="h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-background placeholder-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                id="main-item-manufacturer"
+                placeholder="Enter manufacturer"
+              />
+            </div>
+            <!-- Add more input fields for Main Item here -->
+          </div>
+            
+          <div class="flex p-6">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-blue-500 text-white hover:bg-blue-600 h-10 px-4 py-2"
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  const tabs = document.querySelectorAll('[role="tab"]');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabpanelId = tab.getAttribute('aria-controls');
+      const tabpanel = document.getElementById(tabpanelId);
+
+      tabs.forEach(t => {
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('data-state', 'inactive');
+      });
+
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('data-state', 'active');
+
+      const tabpanels = document.querySelectorAll('[role="tabpanel"]');
+      tabpanels.forEach(tp => {
+        tp.setAttribute('data-state', 'inactive');
+        tp.hidden = true;
+      });
+
+      tabpanel.setAttribute('data-state', 'active');
+      tabpanel.hidden = false;
+    });
+  });
+</script>
+</body>
+</html>
