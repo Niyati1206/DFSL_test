@@ -1,15 +1,16 @@
-from django.shortcuts import render,get_object_or_404, redirect
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
 from .models import Letter, Product, Subproduct, Quotation, AMCProvider, QuotationItem,MainItem,Manufacturer,Department,Lab,LetterProduct
-
 from django.db.models import Count
-
-def index(request):
-    return render(request,'index.html')
-
+from .forms import ManufacturerForm
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from .forms import MainItemForm
+from django.contrib import messages
 
 def amc_providers_list(request):
     providers = AMCProvider.objects.all()
@@ -20,6 +21,110 @@ def amc_providers_list(request):
 def service_report_history(request):
     products = Product.objects.all()
     return render(request, 'service_report_history.html', {'products': products})
+#mainitems
+# Render the list of main items
+def item_list(request):
+    items = MainItem.objects.all()
+    return render(request, 'items.html', {'mitem': items})
+
+# Handle editing of a main item
+def edit_item(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('id')
+        item = get_object_or_404(MainItem, id=item_id)
+        form = MainItemForm(request.POST, instance=item)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Changes saved successfully.')
+        else:
+            messages.error(request, 'Failed to save changes. Please check the form.')
+    
+    # Redirect back to the item list page (items.html)
+    return redirect('item_list')
+
+# Handle deletion of a main item
+def delete_item(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('id')
+        item = MainItem.objects.get(id=item_id)
+        item.delete()
+        messages.success(request, 'Item deleted successfully!')
+    
+    # Redirect back to the item list page (items.html)
+    return redirect('item_list')
+
+# def product_list1(request):
+#     products = Product.objects.all()
+#     return render(request, 'items.html', {'products': products})
+
+
+#manufacturer
+def manufacturer_list(request):
+    manufacturers = Manufacturer.objects.all()
+    return render(request, 'manufacturer.html', {'manufacturers': manufacturers})
+
+
+def edit_manufacturer(request, pk):
+    manufacturer = get_object_or_404(Manufacturer, pk=pk)
+    if request.method == 'POST':
+        form = ManufacturerForm(request.POST, instance=manufacturer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Manufacturer edited successfully.')
+            return redirect(reverse('manufacturer_list') + '?edited=true')
+    else:
+        form = ManufacturerForm(instance=manufacturer)
+    return render(request, 'edit_manufacturer.html', {'form': form})
+
+def delete_manufacturer(request, manufacturer_id):
+    if request.method == "POST":
+        manufacturer = get_object_or_404(Manufacturer, id=manufacturer_id)
+        manufacturer.delete()
+        messages.success(request, 'Manufacturer deleted successfully.')
+    return redirect('manufacturer_list')  # Replace 'manufacturer_list' with your URL name for the manufacturer list view
+
+
+def manufacturer_list(request):
+    return render(request,'manufacturer_list.html')  
+
+def mitem(request):
+    mitem = MainItem.objects.all()
+    context = {'mitem':mitem}
+    return render(request, 'items.html', context)
+
+def manufacturer_view(request):
+    manufacturers = Manufacturer.objects.all()
+    context = {'manufacturers': manufacturers}  
+    return render(request, 'manufacturer.html', context)
+    
+def index(request):
+    return render(request,'index.html')
+
+def items(request):
+    return render(request,'items.html')
+
+def manufacturer(request):
+    return render(request,'manufacturer.html')
+
+def tracking(request):
+    return render(request,'tracking.html')
+ 
+def manufacturer_list(request):
+    manufacturers = Manufacturer.objects.all()
+    return render(request, 'manufacturer_list.html', {'manufacturers': manufacturers})
+
+def edit_manufacturer(request, manufacturer_id):
+    manufacturer = Manufacturer.objects.get(id=manufacturer_id)
+    if request.method == 'POST':
+        form = ManufacturerForm(request.POST, instance=manufacturer)
+        if form.is_valid():
+            form.save()
+            return redirect('manufacturer_list')
+    else:
+        form = ManufacturerForm(instance=manufacturer)
+    return render(request, 'edit_manufacturer.html', {'form': form})
+
 
 def get_sr_numbers(request):
     lab_id = request.GET.get('lab_id')
@@ -81,7 +186,64 @@ def get_product_serial_numbers(request):
     products = Product.objects.filter(lab_id=lab_id, manufacturer__name=manufacturer).values_list('serial_number', flat=True)
     return JsonResponse({'product_serial_numbers': list(products)})
 
+# Product list view
+def product_list_view(request):
+    products = Product.objects.all()
+    return render(request, 'product_list.html', {'products': products})
 
+# Edit product view
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        print(request.POST)  # Add this line to print form data
+        product.name = request.POST.get('name')
+        product.price = request.POST.get('price')
+        product.buying_date = request.POST.get('buying_date')
+        product.department = request.POST.get('department')
+        product.lab_name = request.POST.get('lab_name')
+        product.amc_provider = request.POST.get('amc_provider')
+        product.amc_period = request.POST.get('amc_period')
+        product.expenditure_cost = request.POST.get('expenditure_cost')
+        product.manufacturer_warranty_period = request.POST.get('manufacturer_warranty_period')
+        product.service_report_date = request.POST.get('service_report_date')
+        product.manufacturer = request.POST.get('manufacturer')
+        product.save()
+        messages.success(request, 'Product updated successfully!')
+        return redirect('product_list')
+    return render(request, 'edit_product.html', {'product': product})
+
+
+# Delete product view
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, 'Product deleted successfully!')
+        return redirect('product_list')
+    return render(request, 'product_list.html')
+
+def product_detail_json(request, product_id):
+    try:
+        product = Product.objects.get(pk=product_id)
+        data = {
+            'id': product.id,
+            'name': product.name,
+            'price': product.price,
+            'buying_date': product.buying_date,
+            'department': product.department.name,
+            'lab_name': product.lab_name.name,
+            'amc_provider': product.amc_provider.name,
+            'amc_period': product.amc_period,
+            'expenditure_cost': product.expenditure_cost,
+            'manufacturer_warranty_period': product.manufacturer_warranty_period,
+            'service_report_date': product.service_report_date,
+            'manufacturer': product.manufacturer
+        }
+        return JsonResponse(data)
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+
+        
 
 def product_list(request):
     # Retrieve all LetterProduct objects
@@ -183,12 +345,6 @@ def letter_detail6(request, subproduct_id):
 def product_list6(request):
     letters = Letter.objects.all()
     return render(request, 'table6.html', {'letters': letters})
-
-
-
-
-
-
 
 def product_list7(request):
     letters = Letter.objects.all()
